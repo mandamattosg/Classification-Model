@@ -23,6 +23,7 @@ val_dir = r"validation-horse-or-human"
 data_loader = DataLoader(train_dir, val_dir, IMG_SIZE, BATCH_SIZE)
 train_gen, val_gen = data_loader.load_data()
 
+
 # MobileNetV2 with Transfer Learning 
 base_model = MobileNetV2(
     weights='imagenet',
@@ -45,9 +46,9 @@ model = Model(inputs=base_model.input, outputs=predictions)
 
 # Compile the model
 model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
-    loss='binary_crossentropy',
-    metrics=['accuracy', tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall')]
+   optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
+   loss='binary_crossentropy',
+   metrics=['accuracy', tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall')]
 )
 
 model.summary()
