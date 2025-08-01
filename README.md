@@ -17,7 +17,7 @@ Este projeto visa desenvolver um modelo de Machine Learning capaz de classificar
 ## 📋 Justificativa das Escolhas Técnicas
 1. Arquitetura do Modelo:
    
-  Para a construção do modelo de classificação, a escolha foi baseada na técnica de Transfer Learning utilizando a arquitetura MobileNetV2. Essa técnica é muito eficiente pois o MobileNetV2 (modelo conhecido por sua capacidade de classificação) já foi pré-treinado em um vasto conjunto de dados (ImageNet), aprendendo a reconhecer características visuais genéricas. Ao "congelar" as camadas convolucionais desse modelo e adicionar novas camadas de classificação, o modelo é capaz de aprender a distinguir as classes de interesse de forma mais rápida e eficiente.
+  Para a construção do modelo de classificação, a escolha foi baseada na técnica de Transfer Learning utilizando a arquitetura MobileNetV2. Essa técnica é muito eficiente pois o MobileNetV2 (modelo conhecido por sua capacidade de classificação) já foi pré-treinado em um vasto conjunto de dados (ImageNet), aprendendo a reconhecer características visuais genéricas. Ao "congelar" as camadas convolucionais desse modelo e adicionar novas camadas de classificação, o modelo é capaz de aprender a distinguir as classes de interesse de forma mais rápida e eficiente. Para a implementação do modelo foi usado o TensorFlow com sua API de alto nível, o Keras.
 
 2. Camadas do Modelo: 
    ```
