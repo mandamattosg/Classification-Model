@@ -7,6 +7,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Dropout
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.callbacks import EarlyStopping
+from data_loader import DataLoader
 import seaborn as sns
 import os
 
@@ -18,35 +19,9 @@ IMG_SIZE = (224, 224)
 train_dir = r"horse-or-human"
 val_dir = r"validation-horse-or-human"
 
-# ImageDataGenerator for data augmentation
-train_datagen = ImageDataGenerator(
-    rescale=1./255,  
-    rotation_range=40,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True,
-    fill_mode='nearest'
-)
-
-# Data generator for validation (no augmentation)
-val_datagen = ImageDataGenerator(rescale=1./255)
-
-# Load the datasets
-train_gen = train_datagen.flow_from_directory(
-    train_dir,
-    target_size=IMG_SIZE,
-    batch_size=BATCH_SIZE,
-    class_mode='binary'
-)
-
-val_gen = val_datagen.flow_from_directory(
-    val_dir,
-    target_size=IMG_SIZE,
-    batch_size=BATCH_SIZE,
-    class_mode='binary'
-)
+# Initialize DataLoader
+data_loader = DataLoader(train_dir, val_dir, IMG_SIZE, BATCH_SIZE)
+train_gen, val_gen = data_loader.load_data()
 
 # MobileNetV2 with Transfer Learning 
 base_model = MobileNetV2(
@@ -116,19 +91,10 @@ plt.close()
 
 val_gen.reset() # This is important to ensure the order of predictions matches the labels
 
-val_datagen_eval = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
-val_gen_eval = val_datagen_eval.flow_from_directory(
-    val_dir,
-    target_size=IMG_SIZE,
-    batch_size=BATCH_SIZE,
-    class_mode='binary',
-    shuffle=False # Important
-)
-
 # Predict on validation set
-preds_eval = model.predict(val_gen_eval)
+preds_eval = model.predict(val_gen)
 preds_binary = (preds_eval > 0.5).astype(int).flatten()
-true_labels = val_gen_eval.classes
+true_labels = val_gen.classes
 
 # Confusion matrix 
 cm = confusion_matrix(true_labels, preds_binary)
