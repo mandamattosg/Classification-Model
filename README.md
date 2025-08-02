@@ -61,21 +61,23 @@ Este projeto visa desenvolver um modelo de Machine Learning capaz de classificar
    ```
 4. Validação do modelo:
    
-   Para visualizar as predições do modelo no dataset de validação:
-    ```
+Para visualizar as predições do modelo no dataset de validação:
+   
+   ```
     python validate_model.py
    ```
 6. Execução da API de Inferência:
-   A API expõe um único endpoint para realizar a inferência.
+   
+A API expõe um único endpoint para realizar a inferência.
   * Endpoint: /predict
   * Método: POST
   * Formato da Imagem: A imagem deve ser enviada como um arquivo no corpo da requisição, utilizando o formato multipart/form-data.
-    
-   Para ativar o funcionamento da API REST:
+
+  Para ativar o funcionamento da API REST:
    ```
    python -m uvicorn inference_api:app --reload
    ```
-   Agora, você pode solicitar a inferência como preferir, por exemplo:
+  Agora, você pode solicitar a inferência como preferir, por exemplo:
    * Usando CURL no CMD:
      ```
      curl -X POST "http://127.0.0.1:8000/predict" -F "file=@validation-horse-or-human/horses/horse1-000.png"
